@@ -4,7 +4,7 @@
       source: {{ src }}
     </p>
     <code>
-      {{ userStore }}
+      {{ userStore.userProfile }}
     </code>
   </div>
 </template>
@@ -49,7 +49,7 @@ export default {
 
     const userStore = useUserStore();
 
-    userStore.init(props.value);
+    userStore.init();
 
     onUnmounted(() => {
       // I would like to be able to call userStore.$destroy() to perform a full cleanup of

@@ -8,7 +8,6 @@ export default ({ useSettings, id }) => defineStore({
   id: `user_${id}`,
 
   state: () => ({
-    source: null,
     userData: {
       firsName: 'lorem',
       lastName: 'ipsum',
@@ -17,10 +16,6 @@ export default ({ useSettings, id }) => defineStore({
 
   getters: {
     userProfile(state) {
-      if (!this.source) {
-        return null;
-      }
-
       const userSettings = useSettings();
 
       return {
@@ -35,8 +30,7 @@ export default ({ useSettings, id }) => defineStore({
      * @return {Promise<void>}
      */
   actions: {
-    init(source) {
-      this.source = source;
+    init() {
       const { getSettings } = useSettings();
       return getSettings();
     },
