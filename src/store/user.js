@@ -1,21 +1,11 @@
 import { defineStore } from 'pinia';
-import useLocalSettings from './localSettings';
-import useRemoteSettings from './remoteSettings';
 
 /**
- * @param {'local'|'remote'} source
+ * @param {Function} useSettings
+ * @param {String} id
  */
-const useSettings = (source) => {
-  const sources = {
-    remote: useRemoteSettings,
-    local: useLocalSettings,
-  };
-
-  return sources[source]();
-};
-
-export default defineStore({
-  id: 'user',
+export default ({ useSettings, id }) => defineStore({
+  id: `user_${id}`,
 
   state: () => ({
     source: null,
@@ -31,7 +21,7 @@ export default defineStore({
         return null;
       }
 
-      const userSettings = useSettings(this.source);
+      const userSettings = useSettings();
 
       return {
         ...state.userData,
@@ -41,13 +31,13 @@ export default defineStore({
   },
 
   /**
-   * @param {'local'|'remote'} source
-   * @return {Promise<void>}
-   */
+     * @param {'local'|'remote'} source
+     * @return {Promise<void>}
+     */
   actions: {
     init(source) {
       this.source = source;
-      const { getSettings } = useSettings(source);
+      const { getSettings } = useSettings();
       return getSettings();
     },
   },

@@ -1,37 +1,18 @@
 <template>
   <div>
-    <code>
-      {{ userStore.userProfile }}
-    </code>
-    <p>
-      <select name="settingsSource" id="settingsSource" v-model="settingsSource">
-        <option value="local">
-          use local settings
-        </option>
-        <option value="remote">
-          use remote settings
-        </option>
-      </select>
-    </p>
+    <User source="local" />
+    <User source="remote" />
   </div>
 </template>
 
 <script>
-import { ref, watch } from '@vue/composition-api';
-import useUserStore from '@/store/user';
+import User from './User.vue';
 
 export default {
   name: 'App',
 
-  setup() {
-    const userStore = useUserStore();
-    const settingsSource = ref('local');
-
-    watch(settingsSource, (source) => userStore.init(source));
-
-    userStore.init(settingsSource.value);
-
-    return { userStore, settingsSource };
+  components: {
+    User,
   },
 };
 </script>
